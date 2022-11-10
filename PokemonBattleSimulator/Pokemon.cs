@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace PokemonBattleSimulator
 {
+    public enum PokemonState { AVAILABLE, FAINTED }
+
     public class Pokemon
     {
         public string Name { get; private set; }
         public int HP { get; private set; }
         public int Attack { get; private set; }
+        public PokemonState CurrentState { get; private set; }
 
         public Pokemon(string name, int hp, int attack)
         {
@@ -22,6 +25,11 @@ namespace PokemonBattleSimulator
         public void UseAttack(Pokemon other)
         {
             other.HP -= Attack;
+        }
+
+        public void ChangeAvailabilityStateTo(PokemonState state)
+        {
+            CurrentState = state;
         }
     }
 }

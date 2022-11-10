@@ -9,23 +9,21 @@ namespace PokemonBattleSimulator
     public class Player
     {
         public string Name { get; private set; }
-        public Pokemon? CurrentPokemon { get; private set; }
+        //public Pokemon? CurrentPokemon { get; private set; }
+        public Inventory PlayerInventory { get; private set; }
 
         public Player(string name)
         {
             Name = name;
-            CurrentPokemon = null;
+            PlayerInventory = new Inventory();
+            //CurrentPokemon = null;
         }
 
         public Player(string name, Pokemon pokemon)
         {
             Name = name;
-            CurrentPokemon = pokemon;
-        }
-
-        public void SetPokemon(Pokemon pokemon)
-        {
-            CurrentPokemon = pokemon;
+            PlayerInventory = new Inventory();
+            //CurrentPokemon = pokemon;
         }
     }
 }
