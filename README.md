@@ -9,7 +9,7 @@ This is a textbased Pokemon Battle Simulator written in C#. The goal is to incre
 - [x] Get first "simulation" working, this invovles randomly selected pokemon for each player then the users pokemon will attack until it wins
 - [x] Add states to the pokemon, currently `Available` and `Fainted`
 - [x] Add basic `Inventory` class and organize Pokemon to be in the players inventory
-- [ ] Add `Simulator` class, pull most of the code in the program class into the simulator and organize it properly
+- [x] Add `Simulator` class, pull most of the code in the program class into the simulator and organize it properly
 - [ ] Allow the user to pick from available Pokemon
 - [ ] Add defense stats to the pokemon
 - [ ] Allow the opponent to potentially attack back
