@@ -43,9 +43,48 @@ namespace PokemonBattleSimulator
             }
             else
             {
-                Console.WriteLine("Choosing your own Pokemon is not an available feature");
-                SelectPokemon(true);
+                DisplayPokemonChoiceMenu(availablePokemon);
+                int choice = GetMenuChoice(availablePokemon.Count);
+                CurrentPokemon = availablePokemon[choice];
             }
+        }
+
+        private void DisplayPokemonChoiceMenu(List<Pokemon> availablePokemon)
+        {
+            for(int i = 0; i < availablePokemon.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {availablePokemon[i].GetStatusInline()}");
+            }
+        }
+
+        private int GetMenuChoice(int numberOfOptions)
+        {
+            string? rawChoice = null;
+            bool validChoice = false;
+            int choice = -1;
+
+            do
+            {
+                rawChoice = Console.ReadLine();
+                if(!int.TryParse(rawChoice, out choice))
+                {
+                    Console.WriteLine("Please enter a valid number for your choice");
+                    validChoice = false;
+                    continue;
+                }
+
+                if(choice > numberOfOptions)
+                {
+                    Console.WriteLine("Please enter a valid number for your choice");
+                    validChoice = false;
+                    continue;
+                }
+
+                validChoice = true;
+
+            } while(rawChoice == null || !validChoice);
+
+            return choice - 1;
         }
 
         public void PrintCurrentPokemonStatus()

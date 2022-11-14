@@ -11,14 +11,16 @@ namespace PokemonBattleSimulator
     public class Pokemon
     {
         public string Name { get; private set; }
-        public int HP { get; private set; }
+        public int StartingHP { get; private set; }
+        public int CurrentHP { get; private set; }
         public int Attack { get; private set; }
         public PokemonState CurrentState { get; private set; } = PokemonState.AVAILABLE;
 
         public Pokemon()
         {
             Name = string.Empty;
-            HP = 0;
+            StartingHP = 0;
+            CurrentHP = 0;
             Attack = 0;
             CurrentState = PokemonState.FAINTED;
         }
@@ -26,13 +28,14 @@ namespace PokemonBattleSimulator
         public Pokemon(string name, int hp, int attack)
         {
             Name = name;
-            HP = hp;
+            StartingHP = hp;
+            CurrentHP = StartingHP;
             Attack = attack;
         }
 
         public void UseAttack(Pokemon other)
         {
-            other.HP -= Attack;
+            other.CurrentHP -= Attack;
         }
 
         public void ChangeAvailabilityStateTo(PokemonState state)
@@ -43,9 +46,14 @@ namespace PokemonBattleSimulator
         public void PrintStatus()
         {
             Console.WriteLine($"\tName: {Name}");
-            Console.WriteLine($"\tHP: {HP}");
+            Console.WriteLine($"\tHP: {CurrentHP}");
             Console.WriteLine($"\tAttack: {Attack}");
             Console.WriteLine($"\tState: {CurrentState}");
+        }
+
+        public string GetStatusInline()
+        {
+            return $"Name: {Name}, HP: {CurrentHP}, Attack: {Attack}";
         }
     }
 }

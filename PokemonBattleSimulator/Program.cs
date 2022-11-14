@@ -12,15 +12,18 @@ namespace PokemonBattleSimulator
             battle.Initialize();
             battle.SelectPokemon();
 
-            battle.User.PrintCurrentPokemonStatus();
-            battle.Opponent.PrintCurrentPokemonStatus();
+            Console.WriteLine();
+            battle.PrintSimulatorStatus();
             Console.WriteLine();
 
             Console.WriteLine("Press enter to start battle");
             _ = Console.ReadLine();
 
+            Console.Clear();
+
             battle.Battle();
 
+            battle.PrintSimulatorStatus();
             battle.GetResults();
         }
     }

@@ -30,7 +30,7 @@ namespace PokemonBattleSimulator
         private void InitPlayers()
         {
             User = new Player("Zack");
-            Opponent = new Player("Jack");
+            Opponent = new Player("Smith");
         }
 
         private void InitPlayerInventory(Inventory playerInventory, List<Pokemon> pokemon)
@@ -43,24 +43,32 @@ namespace PokemonBattleSimulator
 
         public void SelectPokemon()
         {
-            User.SelectPokemon(true);
-            Opponent.SelectPokemon(true);
+            Opponent.SelectPokemon(Randomize: true);
+            Opponent.PrintCurrentPokemonStatus();
+            User.SelectPokemon(Randomize: false);
         }
 
         public void Battle()
         {
-            while(Opponent.CurrentPokemon.HP > 0)
+            ConsoleColor defaultForeColor = Console.ForegroundColor;
+            while(Opponent.CurrentPokemon.CurrentHP > 0)
             {
-                Console.WriteLine($"{User.CurrentPokemon.Name} Attacks...");
-                User.CurrentPokemon.UseAttack(Opponent.CurrentPokemon);
-                Console.WriteLine("HIT!!!");
                 PrintSimulatorStatus();
                 Console.WriteLine();
+
+                Console.WriteLine($"{User.CurrentPokemon.Name} Attacks...");
+                User.CurrentPokemon.UseAttack(Opponent.CurrentPokemon);
+                Thread.Sleep(500);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("HIT!!!");
+                Console.ForegroundColor = defaultForeColor;
                 Thread.Sleep(1000);
+                Console.Clear();
             }
 
             // This was the solution if Results was a property
             //Results = new SimulatorResults { WinningPlayer = User, LosingPlayer = Opponent };
+
             results.WinningPlayer = User;
             results.LosingPlayer = Opponent;
         }
@@ -74,7 +82,7 @@ namespace PokemonBattleSimulator
         public void GetResults()
         {
             Console.WriteLine($"{results.LosingPlayer.Name}'s {results.LosingPlayer.CurrentPokemon.Name} has fainted");
-            Console.WriteLine($"{results.WinningPlayer.Name}'s {results.WinningPlayer.CurrentPokemon.Name} has fainted");
+            Console.WriteLine($"{results.WinningPlayer.Name}'s {results.WinningPlayer.CurrentPokemon.Name} has won!");
         }
     }
 }
