@@ -52,19 +52,33 @@ namespace PokemonBattleSimulator
 
         public void Battle()
         {
-            while(Opponent.CurrentPokemon.CurrentHP > 0)
+            bool userTurn = true;
+
+            while(Opponent.CurrentPokemon.CurrentHP > 0 && User.CurrentPokemon.CurrentHP > 0)
             {
                 PrintSimulatorStatus();
                 Console.WriteLine();
+                if(userTurn)
+                {
+                    Console.WriteLine($"{User.CurrentPokemon.Name} Attacks...");
+                    User.CurrentPokemon.UseMove(Opponent.CurrentPokemon);
+                    Console.Write($"{User.Name}'s ");
+                }
+                else
+                {
+                    Console.WriteLine($"{Opponent.CurrentPokemon.Name} Attacks...");
+                    Opponent.CurrentPokemon.UseMove(User.CurrentPokemon);
+                    Console.Write($"{Opponent.Name}'s ");
+                }
 
-                Console.WriteLine($"{User.CurrentPokemon.Name} Attacks...");
-                User.CurrentPokemon.UseMove(Opponent.CurrentPokemon);
                 Thread.Sleep(500);
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("HIT!!!");
                 Console.ForegroundColor = defaultForeColor;
                 Thread.Sleep(1000);
                 Console.Clear();
+
+                userTurn = !userTurn;
             }
 
             // This was the solution if Results was a property
