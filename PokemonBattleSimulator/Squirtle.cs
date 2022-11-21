@@ -8,11 +8,11 @@ namespace PokemonBattleSimulator
 {
     public class Squirtle : Pokemon
     {
-        public Squirtle() : base("Squirtle", 100, 10)
+        public Squirtle() : base("Squirtle", 100, 10, 5)
         {
         }
 
-        public Squirtle(string name, int hp) : base(name, hp, 10)
+        public Squirtle(string name, int hp) : base(name, hp, 10, 5)
         {
         }
     }

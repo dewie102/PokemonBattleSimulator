@@ -9,11 +9,11 @@ namespace PokemonBattleSimulator
     public class Inventory
     {
         // Maybe put a cap on the total number of pokemon available
-        public HashSet<Pokemon> AllPokemon { get; private set; }
+        public List<Pokemon> AllPokemon { get; private set; } // Store all pokemon as List instead of hashset
 
         public Inventory()
         {
-            AllPokemon = new HashSet<Pokemon>();
+            AllPokemon = new List<Pokemon>();
         }
 
         public void AddPokemonToInventory(Pokemon pokemon)

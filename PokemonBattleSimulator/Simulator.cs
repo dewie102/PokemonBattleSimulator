@@ -9,6 +9,8 @@ namespace PokemonBattleSimulator
 {
     public class Simulator
     {
+        ConsoleColor defaultForeColor = Console.ForegroundColor;
+
         Pikachu pikachu1 = new();
         Pikachu pikachu2 = new();
         Charmander charmander1 = new();
@@ -50,14 +52,13 @@ namespace PokemonBattleSimulator
 
         public void Battle()
         {
-            ConsoleColor defaultForeColor = Console.ForegroundColor;
             while(Opponent.CurrentPokemon.CurrentHP > 0)
             {
                 PrintSimulatorStatus();
                 Console.WriteLine();
 
                 Console.WriteLine($"{User.CurrentPokemon.Name} Attacks...");
-                User.CurrentPokemon.UseAttack(Opponent.CurrentPokemon);
+                User.CurrentPokemon.UseMove(Opponent.CurrentPokemon);
                 Thread.Sleep(500);
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("HIT!!!");
@@ -81,8 +82,11 @@ namespace PokemonBattleSimulator
 
         public void GetResults()
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"{results.LosingPlayer.Name}'s {results.LosingPlayer.CurrentPokemon.Name} has fainted");
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"{results.WinningPlayer.Name}'s {results.WinningPlayer.CurrentPokemon.Name} has won!");
+            Console.ForegroundColor = defaultForeColor;
         }
     }
 }

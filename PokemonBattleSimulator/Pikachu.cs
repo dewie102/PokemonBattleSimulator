@@ -8,11 +8,11 @@ namespace PokemonBattleSimulator
 {
     public class Pikachu : Pokemon
     {
-        public Pikachu() : base("Pikachu", 100, 15)
+        public Pikachu() : base("Pikachu", 100, 15, 5)
         {
         }
 
-        public Pikachu(string name, int hp) : base(name, hp, 15)
+        public Pikachu(string name, int hp) : base(name, hp, 15, 5)
         {
         }
     }
