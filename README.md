@@ -13,7 +13,7 @@ This is a textbased Pokemon Battle Simulator written in C#. The goal is to incre
 - [x] Allow the user to pick from available Pokemon
 - [x] Add defense stats to the pokemon, fix attack method to calculate health and change state as needed
 - [x] Allow the opponent to attack back
-- [ ] Add random times where an attack will miss
+- [x] Add random times where an attack will miss
 - [ ] Add a `Moves` class, create some moves and add it to certain Pokemon 
 - [ ] Allow the user to pick what move they want to use
 - [ ] Add better control over console output and colors for easier visuals

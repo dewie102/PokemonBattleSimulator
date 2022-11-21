@@ -40,20 +40,29 @@ namespace PokemonBattleSimulator
         }
 
         // Is this correct? Should I be using the other pokemon to call a private Method on itself?
-        public void UseMove(Pokemon other)
+        public bool UseMove(Pokemon other)
         {
-            other.Attack(BaseAttack);
+            return other.Attack(BaseAttack);
         }
 
-        private void Attack(int attack)
+        private bool Attack(int attack)
         {
-            CurrentHP -= CalculateAttack(attack);
+            bool hit = false;
+
+            if(Program.Rand.Next(10) <= 8) // 10% chance to not attack or 90% chance to attack
+            {
+                int attackAmount = CalculateAttack(attack);
+                CurrentHP -= attackAmount;
+                hit = attackAmount > 0 ? true : false;
+            }
 
             if(CurrentHP <= 0)
             {
                 CurrentState = PokemonState.FAINTED;
                 CurrentHP = 0;
             }
+
+            return hit;
         }
 
         public int CalculateAttack(int attack)

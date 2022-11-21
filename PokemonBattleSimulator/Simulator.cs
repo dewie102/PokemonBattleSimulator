@@ -56,24 +56,33 @@ namespace PokemonBattleSimulator
 
             while(Opponent.CurrentPokemon.CurrentHP > 0 && User.CurrentPokemon.CurrentHP > 0)
             {
+                bool didMoveSucceed = false;
                 PrintSimulatorStatus();
                 Console.WriteLine();
                 if(userTurn)
                 {
-                    Console.WriteLine($"{User.CurrentPokemon.Name} Attacks...");
-                    User.CurrentPokemon.UseMove(Opponent.CurrentPokemon);
-                    Console.Write($"{User.Name}'s ");
+                    Console.WriteLine($"{User.Name}'s {User.CurrentPokemon.Name} Attacks...");
+                    didMoveSucceed = User.CurrentPokemon.UseMove(Opponent.CurrentPokemon);
                 }
                 else
                 {
-                    Console.WriteLine($"{Opponent.CurrentPokemon.Name} Attacks...");
-                    Opponent.CurrentPokemon.UseMove(User.CurrentPokemon);
-                    Console.Write($"{Opponent.Name}'s ");
+                    Console.WriteLine($"{Opponent.Name}'s {Opponent.CurrentPokemon.Name} Attacks...");
+                    didMoveSucceed = Opponent.CurrentPokemon.UseMove(User.CurrentPokemon);
                 }
 
                 Thread.Sleep(500);
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("HIT!!!");
+
+                if(didMoveSucceed)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("HIT!!!");
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("MISSED!!!");
+                }
+
                 Console.ForegroundColor = defaultForeColor;
                 Thread.Sleep(1000);
                 Console.Clear();
