@@ -14,6 +14,7 @@ namespace PokemonBattleSimulator
         private SimulatorResults results;
 
         private Dictionary<string, Pokemon> allPokemon = new();
+        private Dictionary<string, Move> allMoves = new();
 
         public void Initialize()
         {
@@ -26,6 +27,8 @@ namespace PokemonBattleSimulator
             Pokemon squirtle1 = new(allPokemon["squirtle"]);
             Pokemon squirtle2 = new(allPokemon["squirtle"]);
 
+            LoadAllMoves("Moves.json");
+
             InitPlayers();
             InitPlayerInventory(User.PlayerInventory, new List<Pokemon>() { pikachu1, charmander1, squirtle1 });
             InitPlayerInventory(Opponent.PlayerInventory, new List<Pokemon>() { pikachu2, charmander2, squirtle2 });
@@ -37,9 +40,20 @@ namespace PokemonBattleSimulator
             
             JsonSerializerOptions options = new JsonSerializerOptions();
             options.PropertyNameCaseInsensitive = true;
-            options.PropertyNamingPolicy= JsonNamingPolicy.CamelCase;
+            options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
 
             allPokemon = JsonSerializer.Deserialize<Dictionary<string, Pokemon>>(jsonString, options)!;
+        }
+
+        private void LoadAllMoves(string filename)
+        {
+            string jsonString = File.ReadAllText(filename);
+
+            JsonSerializerOptions options = new JsonSerializerOptions();
+            options.PropertyNameCaseInsensitive = true;
+            options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+
+            allMoves = JsonSerializer.Deserialize<Dictionary<string, Move>>(jsonString, options)!;
         }
 
         private void InitPlayers()
