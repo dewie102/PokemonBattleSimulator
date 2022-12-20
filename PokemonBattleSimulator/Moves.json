@@ -1,0 +1,37 @@
+{
+  "thundershock": {
+    "Name":  "Thundershock",
+    "Power": 40,
+    "Type": "ELECTRIC",
+    "Accuracy": 100,
+    "PP": 30
+  },
+  "growl": {
+    "Name":  "Growl",
+    "Power": 0,
+    "Type": "NORMAL",
+    "Accuracy": 100,
+    "PP": 40
+  },
+  "tackle": {
+    "Name": "Tackle",
+    "Power": 35,
+    "Type": "NORMAL",
+    "Accuracy": 95,
+    "PP": 35
+  },
+  "tail_whip": {
+    "Name":  "Tail Whip",
+    "Power": 0,
+    "Type": "NORMAL",
+    "Accuracy": 100,
+    "PP": 30
+  },
+  "scratch": {
+    "Name": "Scratch",
+    "Power": 40,
+    "Type": "NORMAL",
+    "Accuracy": 100,
+    "PP": 35
+  }
+}

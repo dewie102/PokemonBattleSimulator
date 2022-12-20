@@ -1,0 +1,32 @@
+{
+  "pikachu": {
+    "Name": "Pikachu",
+    "BaseHP": 100,
+    "BaseAttack": 15,
+    "BaseDefense": 5,
+    "Moves": [
+      "thundershock",
+      "growl"
+    ]
+  },
+  "squirtle": {
+    "Name": "Squirtle",
+    "BaseHP": 100,
+    "BaseAttack": 10,
+    "BaseDefense": 5,
+    "Moves": [
+      "tackle",
+      "tail_whip"
+    ]
+  },
+  "charmander": {
+    "Name": "Charmander",
+    "BaseHP": 100,
+    "BaseAttack": 10,
+    "BaseDefense": 5,
+    "Moves": [
+      "scratch",
+      "growl"
+    ]
+  }
+}

@@ -14,6 +14,11 @@ This is a textbased Pokemon Battle Simulator written in C#. The goal is to incre
 - [x] Add defense stats to the pokemon, fix attack method to calculate health and change state as needed
 - [x] Allow the opponent to attack back
 - [x] Add random times where an attack will miss
-- [ ] Add a `Moves` class, create some moves and add it to certain Pokemon 
+- [ ] Add a `Moves` class, create some moves and add it to certain Pokemon
+- [ ] Abstract Pokemon class
 - [ ] Allow the user to pick what move they want to use
+- [ ] Make the random attack misses a method
+- [ ] Check if the pokemon is fainted through a method
+- [ ] Make the defense points a curve instead of just subtracting from attack
+- [ ] Do 1 round at a time, making a user turn and enemy turn method
 - [ ] Add better control over console output and colors for easier visuals
