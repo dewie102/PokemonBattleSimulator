@@ -1,9 +1,9 @@
 {
   "pikachu": {
     "Name": "Pikachu",
-    "BaseHP": 100,
-    "BaseAttack": 15,
-    "BaseDefense": 5,
+    "BaseHP": 35,
+    "BaseAttack": 55,
+    "BaseDefense": 30,
     "Moves": [
       "thundershock",
       "growl"
@@ -11,9 +11,9 @@
   },
   "squirtle": {
     "Name": "Squirtle",
-    "BaseHP": 100,
-    "BaseAttack": 10,
-    "BaseDefense": 5,
+    "BaseHP": 44,
+    "BaseAttack": 48,
+    "BaseDefense": 65,
     "Moves": [
       "tackle",
       "tail_whip"
@@ -21,9 +21,9 @@
   },
   "charmander": {
     "Name": "Charmander",
-    "BaseHP": 100,
-    "BaseAttack": 10,
-    "BaseDefense": 5,
+    "BaseHP": 39,
+    "BaseAttack": 52,
+    "BaseDefense": 43,
     "Moves": [
       "scratch",
       "growl"

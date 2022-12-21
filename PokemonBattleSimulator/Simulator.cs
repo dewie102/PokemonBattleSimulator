@@ -7,7 +7,7 @@ namespace PokemonBattleSimulator
 {
     public class Simulator
     {
-        ConsoleColor defaultForeColor = Console.ForegroundColor;
+        readonly ConsoleColor defaultForeColor = Console.ForegroundColor;
 
         public Player User { get; private set; } = new();
         public Player Opponent { get; private set; } = new();
@@ -18,48 +18,27 @@ namespace PokemonBattleSimulator
 
         public void Initialize()
         {
-            LoadAllPokemon("PokemonBaseStats.json");
-
-            Pokemon pikachu1 = new(allPokemon["pikachu"]);
-            Pokemon pikachu2 = new(allPokemon["pikachu"]);
-            Pokemon charmander1 = new(allPokemon["charmander"]);
-            Pokemon charmander2 = new(allPokemon["charmander"]);
-            Pokemon squirtle1 = new(allPokemon["squirtle"]);
-            Pokemon squirtle2 = new(allPokemon["squirtle"]);
-
-            LoadAllMoves("Moves.json");
+            allPokemon = Utilities.LoadJsonToDictionary<Pokemon>("Data/PokemonBaseStats.json");
+            allMoves = Utilities.LoadJsonToDictionary<Move>("Data/Moves.json");
 
             InitPlayers();
-            InitPlayerInventory(User.PlayerInventory, new List<Pokemon>() { pikachu1, charmander1, squirtle1 });
-            InitPlayerInventory(Opponent.PlayerInventory, new List<Pokemon>() { pikachu2, charmander2, squirtle2 });
-        }
-
-        private void LoadAllPokemon(string filename)
-        {
-            string jsonString = File.ReadAllText(filename);
-            
-            JsonSerializerOptions options = new JsonSerializerOptions();
-            options.PropertyNameCaseInsensitive = true;
-            options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-
-            allPokemon = JsonSerializer.Deserialize<Dictionary<string, Pokemon>>(jsonString, options)!;
-        }
-
-        private void LoadAllMoves(string filename)
-        {
-            string jsonString = File.ReadAllText(filename);
-
-            JsonSerializerOptions options = new JsonSerializerOptions();
-            options.PropertyNameCaseInsensitive = true;
-            options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-
-            allMoves = JsonSerializer.Deserialize<Dictionary<string, Move>>(jsonString, options)!;
         }
 
         private void InitPlayers()
         {
             User = new Player("Zack");
+            InitPlayerInventory(User.PlayerInventory, new List<Pokemon>() {
+                new(allPokemon["pikachu"]),
+                new(allPokemon["charmander"]),
+                new(allPokemon["squirtle"])
+            });
+
             Opponent = new Player("Smith");
+            InitPlayerInventory(Opponent.PlayerInventory, new List<Pokemon>() {
+                new(allPokemon["pikachu"]),
+                new(allPokemon["charmander"]),
+                new(allPokemon["squirtle"])
+            });
         }
 
         private void InitPlayerInventory(Inventory playerInventory, List<Pokemon> pokemon)
@@ -77,65 +56,72 @@ namespace PokemonBattleSimulator
             User.SelectPokemon(Randomize: false);
         }
 
+        private void UserTurn()
+        {
+            Console.WriteLine($"{User.Name}'s {User.CurrentPokemon.Name} Attacks...");
+            if(User.CurrentPokemon.UseMove(Opponent.CurrentPokemon))
+                PrintMoveHitMessage();
+            else
+                PrintMoveMissMessage();
+
+        }
+
+        private void EnemyTurn()
+        {
+            Console.WriteLine($"{Opponent.Name}'s {Opponent.CurrentPokemon.Name} Attacks...");
+            if(Opponent.CurrentPokemon.UseMove(User.CurrentPokemon))
+                PrintMoveHitMessage();
+            else
+                PrintMoveMissMessage();
+        }
+
         public void Battle()
         {
-            bool userTurn = true;
-
-            while(Opponent.CurrentPokemon.CurrentHP > 0 && User.CurrentPokemon.CurrentHP > 0)
+            while(!Opponent.CurrentPokemon.IsPokemonFainted() && !User.CurrentPokemon.IsPokemonFainted())
             {
-                bool didMoveSucceed = false;
                 PrintSimulatorStatus();
-                Console.WriteLine();
-                if(userTurn)
-                {
-                    Console.WriteLine($"{User.Name}'s {User.CurrentPokemon.Name} Attacks...");
-                    didMoveSucceed = User.CurrentPokemon.UseMove(Opponent.CurrentPokemon);
-                }
-                else
-                {
-                    Console.WriteLine($"{Opponent.Name}'s {Opponent.CurrentPokemon.Name} Attacks...");
-                    didMoveSucceed = Opponent.CurrentPokemon.UseMove(User.CurrentPokemon);
-                }
 
-                Thread.Sleep(500);
+                UserTurn();
+                EnemyTurn();
 
-                if(didMoveSucceed)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("HIT!!!");
-                }
-                else
-                {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("MISSED!!!");
-                }
-
-                Console.ForegroundColor = defaultForeColor;
-                Thread.Sleep(1000);
+                Thread.Sleep(1500);
                 Console.Clear();
-
-                userTurn = !userTurn;
             }
 
             // This was the solution if Results was a property
             //Results = new SimulatorResults { WinningPlayer = User, LosingPlayer = Opponent };
 
-            results.WinningPlayer = User;
-            results.LosingPlayer = Opponent;
+            results.WinningPlayer = User.CurrentPokemon.IsPokemonFainted() ? Opponent : User;
+            results.LosingPlayer = results.WinningPlayer == User ? Opponent : User;
         }
 
         public void PrintSimulatorStatus()
         {
             User.PrintCurrentPokemonStatus();
             Opponent.PrintCurrentPokemonStatus();
+            Console.WriteLine();
         }
 
-        public void GetResults()
+        public void PrintResults()
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"{results.LosingPlayer.Name}'s {results.LosingPlayer.CurrentPokemon.Name} has fainted");
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"{results.WinningPlayer.Name}'s {results.WinningPlayer.CurrentPokemon.Name} has won!");
+            Console.ForegroundColor = defaultForeColor;
+        }
+
+        private void PrintMoveHitMessage()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("HIT!!!");
+            Console.ForegroundColor = defaultForeColor;
+        }
+
+        private void PrintMoveMissMessage()
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("MISSED!!!");
             Console.ForegroundColor = defaultForeColor;
         }
     }

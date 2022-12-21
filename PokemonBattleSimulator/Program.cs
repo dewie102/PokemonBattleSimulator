@@ -24,7 +24,7 @@ namespace PokemonBattleSimulator
             battle.Battle();
 
             battle.PrintSimulatorStatus();
-            battle.GetResults();
+            battle.PrintResults();
         }
     }
 }

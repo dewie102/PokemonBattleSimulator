@@ -8,10 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="Moves.json">
+    <None Update="Data\Moves.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="PokemonBaseStats.json">
+    <None Update="Data\PokemonBaseStats.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

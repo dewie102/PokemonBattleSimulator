@@ -46,30 +46,47 @@ namespace PokemonBattleSimulator
             Moves = pokemon.Moves;
         }
 
+        public bool IsPokemonFainted()
+        {
+            return CurrentState == PokemonState.FAINTED;
+        }
+
+        private void CheckIfPokemonFainted()
+        {
+            if(CurrentHP <= 0)
+            {
+                ChangeAvailabilityStateTo(PokemonState.FAINTED);
+                CurrentHP = 0;
+            }
+        }
+
         // Is this correct? Should I be using the other pokemon to call a private Method on itself?
         public bool UseMove(Pokemon other)
         {
-            return other.ReceiveAttack(BaseAttack);
+            if(!DidTheMoveHit())
+                return false;
+
+            other.ReceiveAttack(BaseAttack);
+            return true;
         }
 
-        public bool ReceiveAttack(int attack)
+        private bool DidTheMoveHit()
         {
-            bool hit = false;
+            // 10% chance to not attack or 90% chance to attack
+            // Next() is non-inclusive so its from 0-9, if the number is 9 then don't hit
+            return Program.Rand.Next(10) <= 8;
+        }
 
-            if(Program.Rand.Next(10) <= 8) // 10% chance to not attack or 90% chance to attack
-            {
-                int attackAmount = CalculateAttack(attack);
-                CurrentHP -= attackAmount;
-                hit = attackAmount > 0 ? true : false;
-            }
+        public void ReceiveAttack(int attack)
+        {
+            int attackAmount = CalculateAttack(attack);
+            TakeDamage(attackAmount);
+        }
 
-            if(CurrentHP <= 0)
-            {
-                CurrentState = PokemonState.FAINTED;
-                CurrentHP = 0;
-            }
-
-            return hit;
+        private void TakeDamage(int damage)
+        {
+            CurrentHP -= damage;
+            CheckIfPokemonFainted();
         }
 
         public int CalculateAttack(int attack)
