@@ -57,6 +57,30 @@ namespace PokemonBattleSimulator
             }
         }
 
+        public string SelectMove(bool Randomize = true)
+        {
+            List<string> availableMoves = CurrentPokemon.Moves;
+            if(Randomize)
+            {
+                int index = Program.Rand.Next(availableMoves.Count);
+                return availableMoves[index];
+            }
+            else
+            {
+                DisplayPokemonMoveChoiceMenu(availableMoves);
+                int choice = GetMenuChoice(availableMoves.Count);
+                return availableMoves[choice];
+            }
+        }
+
+        private void DisplayPokemonMoveChoiceMenu(List<string> availableMoves)
+        {
+            for(int i = 0; i < availableMoves.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {availableMoves[i]}");
+            }
+        }
+
         private int GetMenuChoice(int numberOfOptions)
         {
             string? rawChoice = null;

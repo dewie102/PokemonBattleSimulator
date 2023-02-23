@@ -58,12 +58,17 @@ namespace PokemonBattleSimulator
 
         private void UserTurn()
         {
+            SelectMoveToUse();
             Console.WriteLine($"{User.Name}'s {User.CurrentPokemon.Name} Attacks...");
             if(User.CurrentPokemon.UseMove(Opponent.CurrentPokemon))
                 PrintMoveHitMessage();
             else
                 PrintMoveMissMessage();
+        }
 
+        private void SelectMoveToUse()
+        {
+            Move selectedMove = allMoves[User.SelectMove(Randomize: false)];
         }
 
         private void EnemyTurn()
