@@ -41,7 +41,7 @@ namespace PokemonBattleSimulator
             });
         }
 
-        private void InitPlayerInventory(Inventory playerInventory, List<Pokemon> pokemon)
+        static private void InitPlayerInventory(Inventory playerInventory, List<Pokemon> pokemon)
         {
             foreach(Pokemon p in pokemon)
             {
@@ -51,8 +51,13 @@ namespace PokemonBattleSimulator
 
         public void SelectPokemon()
         {
-            Opponent.SelectPokemon(Randomize: true);
+            
+            Pokemon selectedPokemon = (Pokemon)Utilities.SelectChoiceFrom(new List<ISelectable>(Opponent.PlayerInventory.GetAvailablePokemon()),
+                                                                            Randomize: true);
+            Opponent.SetPokemon(selectedPokemon);
             Opponent.PrintCurrentPokemonStatus();
+
+
             User.SelectPokemon(Randomize: false);
         }
 

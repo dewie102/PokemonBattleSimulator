@@ -29,6 +29,11 @@ namespace PokemonBattleSimulator
             }
         }
 
+        public bool IsPokemonAvailable(Pokemon pokemon)
+        {
+            return AllPokemon.Contains(pokemon) && pokemon.CurrentState != PokemonState.FAINTED;
+        }
+
         public List<Pokemon> GetAvailablePokemon()
         {
             List<Pokemon> availablePokemon = new List<Pokemon>();
@@ -40,7 +45,5 @@ namespace PokemonBattleSimulator
 
             return availablePokemon;
         }
-
-
     }
 }

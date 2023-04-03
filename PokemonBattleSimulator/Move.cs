@@ -9,7 +9,7 @@ namespace PokemonBattleSimulator
 {
     public enum MoveType { ELECTRIC, NORMAL };
 
-    public class Move
+    public class Move : ISelectable
     {
         public string Name { get; private set; }
         public string Type { get; private set;  }
@@ -25,6 +25,11 @@ namespace PokemonBattleSimulator
             Accuracy = accuracy;
             Power = power;
             PP = pp;
+        }
+
+        public string GetDisplayString()
+        {
+            return Name;
         }
     }
 }

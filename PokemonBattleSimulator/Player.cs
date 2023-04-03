@@ -30,85 +30,17 @@ namespace PokemonBattleSimulator
         {
             Name = name;
             PlayerInventory = new();
-            //CurrentPokemon = pokemon;
+            CurrentPokemon = pokemon;
         }
 
-        public void SelectPokemon(bool Randomize = true)
+        public void SetPokemon(Pokemon pokemon)
         {
-            List<Pokemon> availablePokemon = PlayerInventory.GetAvailablePokemon();
-            if(Randomize)
+            if(pokemon != null && PlayerInventory.IsPokemonAvailable(pokemon))
             {
-                int index = Program.Rand.Next(availablePokemon.Count);
-                CurrentPokemon = availablePokemon[index];
+                CurrentPokemon = pokemon;
             }
             else
-            {
-                DisplayPokemonChoiceMenu(availablePokemon);
-                int choice = GetMenuChoice(availablePokemon.Count);
-                CurrentPokemon = availablePokemon[choice];
-            }
-        }
-
-        private void DisplayPokemonChoiceMenu(List<Pokemon> availablePokemon)
-        {
-            for(int i = 0; i < availablePokemon.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {availablePokemon[i].GetStatusInline()}");
-            }
-        }
-
-        public string SelectMove(bool Randomize = true)
-        {
-            List<string> availableMoves = CurrentPokemon.Moves;
-            if(Randomize)
-            {
-                int index = Program.Rand.Next(availableMoves.Count);
-                return availableMoves[index];
-            }
-            else
-            {
-                DisplayPokemonMoveChoiceMenu(availableMoves);
-                int choice = GetMenuChoice(availableMoves.Count);
-                return availableMoves[choice];
-            }
-        }
-
-        private void DisplayPokemonMoveChoiceMenu(List<string> availableMoves)
-        {
-            for(int i = 0; i < availableMoves.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {availableMoves[i]}");
-            }
-        }
-
-        private int GetMenuChoice(int numberOfOptions)
-        {
-            string? rawChoice = null;
-            bool validChoice = false;
-            int choice = -1;
-
-            do
-            {
-                rawChoice = Console.ReadLine();
-                if(!int.TryParse(rawChoice, out choice))
-                {
-                    Console.WriteLine("Please enter a valid number for your choice");
-                    validChoice = false;
-                    continue;
-                }
-
-                if(choice > numberOfOptions)
-                {
-                    Console.WriteLine("Please enter a valid number for your choice");
-                    validChoice = false;
-                    continue;
-                }
-
-                validChoice = true;
-
-            } while(rawChoice == null || !validChoice);
-
-            return choice - 1;
+                Console.WriteLine("Error, pokemon not avilable or is null");
         }
 
         public void PrintCurrentPokemonStatus()

@@ -14,7 +14,7 @@ namespace PokemonBattleSimulator
     // Not sure how to abstract this class properly
     // or how to not create a new file/ class for each pokemon
     //[JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
-    public class Pokemon
+    public class Pokemon : ISelectable
     {
         public string Name { get; private set; }
         public int BaseHP { get; private set; }
@@ -70,7 +70,7 @@ namespace PokemonBattleSimulator
             return true;
         }
 
-        private bool DidTheMoveHit()
+        static private bool DidTheMoveHit()
         {
             // 10% chance to not attack or 90% chance to attack
             // Next() is non-inclusive so its from 0-9, if the number is 9 then don't hit
@@ -111,6 +111,11 @@ namespace PokemonBattleSimulator
         public string GetStatusInline()
         {
             return $"Name: {Name}, HP: {CurrentHP}, Attack: {BaseAttack}, Defense: {BaseDefense}";
+        }
+
+        public string GetDisplayString()
+        {
+            return GetStatusInline();
         }
     }
 }
