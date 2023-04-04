@@ -52,13 +52,15 @@ namespace PokemonBattleSimulator
         public void SelectPokemon()
         {
             
-            Pokemon selectedPokemon = (Pokemon)Utilities.SelectChoiceFrom(new List<ISelectable>(Opponent.PlayerInventory.GetAvailablePokemon()),
+            Pokemon selectedPokemon = (Pokemon)Utilities.SelectChoiceFrom(new List<ISelectable>(Opponent.PlayerInventory.GetAvailablePokemons()),
                                                                             Randomize: true);
             Opponent.SetPokemon(selectedPokemon);
             Opponent.PrintCurrentPokemonStatus();
 
-
-            User.SelectPokemon(Randomize: false);
+            selectedPokemon = (Pokemon)Utilities.SelectChoiceFrom(new List<ISelectable>(User.PlayerInventory.GetAvailablePokemons()),
+                                                                   Randomize: false);
+            User.SetPokemon(selectedPokemon);
+            User.PrintCurrentPokemonStatus();
         }
 
         private void UserTurn()
@@ -73,7 +75,8 @@ namespace PokemonBattleSimulator
 
         private void SelectMoveToUse()
         {
-            Move selectedMove = allMoves[User.SelectMove(Randomize: false)];
+            Move move = (Move)Utilities.SelectChoiceFrom(new List<ISelectable>(User.CurrentPokemon.GetAvailableMoves()),
+                                                        Randomize: false);
         }
 
         private void EnemyTurn()

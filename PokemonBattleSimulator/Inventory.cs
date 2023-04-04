@@ -34,7 +34,7 @@ namespace PokemonBattleSimulator
             return AllPokemon.Contains(pokemon) && pokemon.CurrentState != PokemonState.FAINTED;
         }
 
-        public List<Pokemon> GetAvailablePokemon()
+        public List<Pokemon> GetAvailablePokemons()
         {
             List<Pokemon> availablePokemon = new List<Pokemon>();
             foreach(Pokemon pokemon in AllPokemon)

@@ -22,11 +22,11 @@ namespace PokemonBattleSimulator
         public int BaseAttack { get; private set; }
         public int BaseDefense { get; private set; }
         public PokemonState CurrentState { get; private set; } = PokemonState.AVAILABLE;
-        public List<string> Moves { get; private set; }
+        public List<Move> Moves { get; private set; }
 
 
         [JsonConstructor]
-        public Pokemon(string name, int baseHP, int baseAttack, int baseDefense, List<string> moves)
+        public Pokemon(string name, int baseHP, int baseAttack, int baseDefense, List<Move> moves)
         {
             Name = name;
             BaseHP = baseHP;
@@ -58,6 +58,11 @@ namespace PokemonBattleSimulator
                 ChangeAvailabilityStateTo(PokemonState.FAINTED);
                 CurrentHP = 0;
             }
+        }
+
+        public List<Move> GetAvailableMoves()
+        {
+            return Moves;
         }
 
         // Is this correct? Should I be using the other pokemon to call a private Method on itself?
