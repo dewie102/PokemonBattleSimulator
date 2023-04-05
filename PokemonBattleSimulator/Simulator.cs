@@ -52,15 +52,14 @@ namespace PokemonBattleSimulator
         public void SelectPokemon()
         {
             
-            Pokemon selectedPokemon = (Pokemon)Utilities.SelectChoiceFrom(new List<ISelectable>(Opponent.PlayerInventory.GetAvailablePokemons()),
+            Pokemon selectedPokemon = (Pokemon)Utilities.SelectChoiceFrom(Opponent.PlayerInventory.GetAvailablePokemons().Cast<ISelectable>().ToList(),
                                                                             Randomize: true);
             Opponent.SetPokemon(selectedPokemon);
             Opponent.PrintCurrentPokemonStatus();
 
-            selectedPokemon = (Pokemon)Utilities.SelectChoiceFrom(new List<ISelectable>(User.PlayerInventory.GetAvailablePokemons()),
+            selectedPokemon = (Pokemon)Utilities.SelectChoiceFrom(User.PlayerInventory.GetAvailablePokemons().Cast<ISelectable>().ToList(),
                                                                    Randomize: false);
             User.SetPokemon(selectedPokemon);
-            User.PrintCurrentPokemonStatus();
         }
 
         private void UserTurn()
